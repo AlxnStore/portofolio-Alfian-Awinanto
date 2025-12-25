@@ -161,40 +161,6 @@
             align-items: center;
         }
 
-        .home-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 100px 2rem 50px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-}
-
-.home-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 400px 1fr;
-    gap: 4rem;
-    align-items: center;
-    scroll-snap-align: start;
-}
-
-/* Smooth scrolling untuk mobile */
-@media (max-width: 968px) {
-    .home-section {
-        overflow-x: scroll;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .home-container {
-        min-width: 100%;
-        scroll-snap-align: center;
-    }
-}
-
         /* Lanyard BUMN Styles */
         .lanyard-container {
             position: relative;
@@ -1067,765 +1033,914 @@
             resize: vertical;
         }
 
-        /* Footer */
-        .footer {
-            background: var(--surface-color);
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .footer p {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .footer-social {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .footer-social a {
-            width: 40px;
-            height: 40px;
-            background: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-social a:hover {
-            background: var(--gradient);
-            transform: translateY(-5px);
-        }
-
-        /* Back to Top */
-        .back-to-top {
+        /* Spotify Player */
+        .spotify-player {
             position: fixed;
-            bottom: 30px;
+            bottom: 100px;
             right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
+            z-index: 998;
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .spotify-player.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+        }
+
+        .spotify-container {
+            background: var(--surface-color);
+            border-radius: 15px;
+            padding: 1rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 2px solid var(--primary-color);
+        }
+
+        .spotify-close {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            background: var(--error-color);
             color: white;
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
-            opacity: 0;
-            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .spotify-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: #dc2626;
+        }
+
+        /* Music Toggle Button */
+        .music-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1DB954, #1ed760);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
             z-index: 999;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(29, 185, 84, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .back-to-top.show {
+        .music-toggle:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 30px rgba(29, 185, 84, 0.6);
+}
+
+.music-toggle.active {
+        background: linear-gradient(135deg, #1ed760, #1DB954);
+        box-shadow: 0 8px 30px rgba(29, 185, 84, 0.8);
+    }
+
+    .music-toggle i {
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    /* Footer */
+    .footer {
+        background: var(--surface-color);
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .footer p {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+
+    .footer-social {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .footer-social a {
+        width: 40px;
+        height: 40px;
+        background: var(--bg-color);
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .footer-social a:hover {
+        background: var(--gradient);
+        transform: translateY(-5px);
+    }
+
+    /* Back to Top */
+    .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--gradient);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.2rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+
+    .back-to-top.show {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .back-to-top:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+        .home-container {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .lanyard-container {
+            margin-bottom: 3rem;
+        }
+
+        .hero-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .about-content,
+        .contact-content {
+            grid-template-columns: 1fr;
+        }
+
+        .about-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .nav-menu {
+            position: fixed;
+            left: -100%;
+            top: 70px;
+            flex-direction: column;
+            background: var(--surface-color);
+            width: 100%;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+            padding: 2rem 0;
+        }
+
+        .nav-menu.active {
+            left: 0;
+        }
+
+        .nav-toggle {
+            display: flex;
+        }
+
+        .timeline::before {
+            left: 0;
+        }
+
+        .timeline-item {
+            justify-content: flex-start !important;
+        }
+
+        .timeline-item .timeline-content {
+            text-align: left !important;
+            padding-left: 3rem !important;
+            padding-right: 0 !important;
+            width: calc(100% - 40px);
+        }
+
+        .timeline-dot {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        .projects-grid,
+        .skills-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .lanyard-card {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .hero-buttons {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .testimonial-card {
+            min-width: 280px;
+        }
+
+        .spotify-player {
+            bottom: 90px;
+            right: 10px;
+            left: 10px;
+        }
+        
+        .spotify-container {
+            padding: 0.8rem;
+        }
+        
+        .music-toggle {
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            bottom: 20px;
+            right: 20px;
+        }
+    }
+
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes confettiFall {
+        to {
+            top: 100vh;
+            transform: translateX(100px) rotate(720deg);
+            opacity: 0;
+        }
+    }
+
+    @keyframes popIn {
+        from {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+        }
+        to {
+            transform: translate(-50%, -50%) scale(1);
             opacity: 1;
-            pointer-events: all;
         }
+    }
 
-        .back-to-top:hover {
-            transform: translateY(-5px);
+    @keyframes popOut {
+        from {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
         }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-            .home-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .lanyard-container {
-                margin-bottom: 3rem;
-            }
-
-            .hero-text {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .about-content,
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-
-            .about-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-menu {
-                position: fixed;
-                left: -100%;
-                top: 70px;
-                flex-direction: column;
-                background: var(--surface-color);
-                width: 100%;
-                text-align: center;
-                transition: 0.3s;
-                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-                padding: 2rem 0;
-            }
-
-            .nav-menu.active {
-                left: 0;
-            }
-
-            .nav-toggle {
-                display: flex;
-            }
-
-            .timeline::before {
-                left: 0;
-            }
-
-            .timeline-item {
-                justify-content: flex-start !important;
-            }
-
-            .timeline-item .timeline-content {
-                text-align: left !important;
-                padding-left: 3rem !important;
-                padding-right: 0 !important;
-                width: calc(100% - 40px);
-            }
-
-            .timeline-dot {
-                left: 0;
-                transform: translateX(0);
-            }
-
-            .projects-grid,
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
+        to {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
         }
+    }
 
-        @media (max-width: 600px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .lanyard-card {
-                width: 100%;
-                max-width: 350px;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .testimonial-card {
-                min-width: 280px;
-            }
+    @keyframes slideInRight {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
         }
-
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+        to {
+            transform: translateX(0);
+            opacity: 1;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+    }
+    
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
         }
-
-        @keyframes confettiFall {
-            to {
-                top: 100vh;
-                transform: translateX(100px) rotate(720deg);
-                opacity: 0;
-            }
+        to {
+            transform: translateX(400px);
+            opacity: 0;
         }
+    }
+</style>
 
-        @keyframes popIn {
-            from {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0;
-            }
-            to {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes popOut {
-            from {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-            to {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0;
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Particle Background -->
     <canvas id="particleCanvas"></canvas>
-    
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <i class="fas fa-code"></i>
-                <span>Portofolio Saya</span>
-            </div>
-            <div class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#home" class="nav-link active">Beranda</a></li>
-                <li><a href="#about" class="nav-link">Tentang saya</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#experience" class="nav-link">Pengalaman</a></li>
-                <li><a href="#testimonials" class="nav-link">Saran</a></li>
-                <li><a href="#contact" class="nav-link">Kontak</a></li>
-            </ul>
-            <div class="theme-toggle">
-                <i class="fas fa-moon" id="themeIcon"></i>
-            </div>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <i class="fas fa-code"></i>
+            <span>Portofolio Saya</span>
         </div>
-    </nav>
+        <div class="nav-toggle" id="navToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#home" class="nav-link active">Beranda</a></li>
+            <li><a href="#about" class="nav-link">Tentang saya</a></li>
+            <li><a href="#skills" class="nav-link">Skills</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#experience" class="nav-link">Pengalaman</a></li>
+            <li><a href="#testimonials" class="nav-link">Saran</a></li>
+            <li><a href="#contact" class="nav-link">Kontak</a></li>
+        </ul>
+        <div class="theme-toggle">
+            <i class="fas fa-moon" id="themeIcon"></i>
+        </div>
+    </div>
+</nav>
 
-    <!-- Home Section dengan Lanyard BUMN -->
-    <section id="home" class="home-section">
-        <div class="home-container">
-            <div class="lanyard-container">
-                <div class="lanyard-clip"></div>
-                <div class="lanyard-string"></div>
-                <div class="lanyard-card">
-                    <div class="lanyard-hole"></div>
-                    <div class="lanyard-content">
-                        <div class="profile-image-container">
-                            <div class="image-border"></div>
-                            <img src="https://i.pinimg.com/736x/c8/05/30/c80530f1ad4fa82dfc8a78a7665cd8f7.jpg" alt="Alfian Awinanto" class="profile-image">
-                        </div>
-                        <h1 class="name-title">Alfian Awinanto</h1>
-                        <p class="tagline">Mobile App Developer</p>
-                        <div class="social-icons">
-    <a href="https://github.com/AlxnStore" class="social-icon"><i class="fab fa-github"></i></a>
-    <a href="https://www.linkedin.com/in/alfian-awinanto-a1b7a12b2?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="social-icon"><i class="fab fa-linkedin"></i></a>
-    <a href="https://wa.me/6288291389753" class="social-icon"><i class="fab fa-whatsapp"></i></a>
-    <a href="https://www.instagram.com/alfian_awinanto7?igsh=NXQxNnhzYTF5MGM4" class="social-icon"><i class="fab fa-instagram"></i></a>
-</div>
+<!-- Home Section dengan Lanyard BUMN -->
+<section id="home" class="home-section">
+    <div class="home-container">
+        <div class="lanyard-container">
+            <div class="lanyard-clip"></div>
+            <div class="lanyard-string"></div>
+            <div class="lanyard-card">
+                <div class="lanyard-hole"></div>
+                <div class="lanyard-content">
+                    <div class="profile-image-container">
+                        <div class="image-border"></div>
+                        <img src="https://i.pinimg.com/736x/c8/05/30/c80530f1ad4fa82dfc8a78a7665cd8f7.jpg" alt="Alfian Awinanto" class="profile-image">
+                    </div>
+                    <h1 class="name-title">Alfian Awinanto</h1>
+                    <p class="tagline">Mobile App Developer</p>
+                    <div class="social-icons">
+                        <a href="https://github.com/AlxnStore" class="social-icon"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/alfian-awinanto-a1b7a12b2?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://wa.me/6288291389753" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/alfian_awinanto7?igsh=NXQxNnhzYTF5MGM4" class="social-icon"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="hero-text">
-                <h2 class="hero-subtitle">Selamat Datang di Portofolio Saya</h2>
-                <h1 class="hero-title">
-                    <span class="typing-text"></span>
-                    <span class="cursor">|</span>
-                </h1>
-                <p class="hero-description">
-                    Bersemangat menciptakan aplikasi yang indah, fungsional, dan ramah pengguna. Mari kita ciptakan sesuatu yang luar biasa bersama!
-                </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary" onclick="scrollToSection('projects')">
-                        lihat project saya
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                    <button class="btn btn-secondary" onclick="scrollToSection('contact')">
+        </div>
+        <div class="hero-text">
+            <h2 class="hero-subtitle">Selamat Datang di Portofolio Saya</h2>
+            <h1 class="hero-title">
+                <span class="typing-text"></span>
+                <span class="cursor">|</span>
+            </h1>
+            <p class="hero-description">
+                Bersemangat menciptakan aplikasi yang indah, fungsional, dan ramah pengguna. Mari kita ciptakan sesuatu yang luar biasa bersama!
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('projects')">
+                    lihat project saya
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="btn btn-secondary" onclick="scrollToSection('contact')">
+                    <i class="fas fa-envelope"></i>
+                    Hubungi Kami
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about-section">
+    <div class="container">
+        <h2 class="section-title">Tentang Saya</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <div class="image-frame">
+                    <img src="https://i.pinimg.com/736x/c9/74/a6/c974a600bea386f6bf1d467f7c2f3c38.jpg" alt="About">
+                </div>
+            </div>
+            <div class="about-text">
+                <h3>Hi, saya Alfian Awinanto</h3>
+                <p>Saya seorang profesional Mobile App Developer yang bersemangat dalam mengembangkan aplikasi dan website. Saya senang membuat aplikasi dan website dari yang simple menjadi yang kompleks,interaktif, responsif agar terlihat indah. Saya suka suka mendesain sebuah logo dan edit foto atau video. dan saya juga berprofesional sebagai Teknisi Jaringan Komputer.</p>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="50">0</span>
+                        <span class="stat-label">Project terselesaikan</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="30">0</span>
+                        <span class="stat-label">Pelanggan Senang</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="3">0</span>
+                        <span class="stat-label">Tahun Pengalaman</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i>
+                    Download CV
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="skills-section">
+    <div class="container">
+        <h2 class="section-title">Skill saya</h2>
+        <div class="skills-filter">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="frontend">Frontend</button>
+            <button class="filter-btn" data-filter="backend">Backend</button>
+            <button class="filter-btn" data-filter="editing">Editing</button>
+            <button class="filter-btn" data-filter="network">Network</button>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card" data-category="frontend">
+                <div class="skill-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Dart</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="95"></div>
+                </div>
+                <span class="skill-percentage">95%</span>
+            </div>
+            <div class="skill-card" data-category="frontend">
+                <div class="skill-icon">
+                    <i class="fab fa-swift"></i>
+                </div>
+                <h3>Swift</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="90"></div>
+                </div>
+                <span class="skill-percentage">90%</span>
+            </div>
+            <div class="skill-card" data-category="backend">
+                <div class="skill-icon">
+                    <i class="fab fa-php"></i>
+                </div>
+                <h3>PHP</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="90"></div>
+                </div>
+                <span class="skill-percentage">90%</span>
+            </div>
+            <div class="skill-card" data-category="frontend">
+                <div class="skill-icon">
+                    <i class="fab fa-html5"></i>
+                </div>
+                <h3>HTML5</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="95"></div>
+                </div>
+                <span class="skill-percentage">95%</span>
+            </div>
+            <div class="skill-card" data-category="frontend">
+                <div class="skill-icon">
+                    <i class="fab fa-css3-alt"></i>
+                </div>
+                <h3>CSS3</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="90"></div>
+                </div>
+                <span class="skill-percentage">90%</span>
+            </div>
+            <div class="skill-card" data-category="frontend">
+                <div class="skill-icon">
+                    <i class="fab fa-js"></i>
+                </div>
+                <h3>JavaScript</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="88"></div>
+                </div>
+                <span class="skill-percentage">88%</span>
+            </div>
+            <div class="skill-card" data-category="frontend">
+                <div class="skill-icon">
+                    <i class="fab fa-react"></i>
+                </div>
+                <h3>React</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="85"></div>
+                </div>
+                <span class="skill-percentage">85%</span>
+            </div>
+            <div class="skill-card" data-category="backend">
+                <div class="skill-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="82"></div>
+                </div>
+                <span class="skill-percentage">82%</span>
+            </div>
+            <div class="skill-card" data-category="backend">
+                <div class="skill-icon">
+                    <i class="fab fa-python"></i>
+                </div>
+                <h3>Python</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="90"></div>
+                </div>
+                <span class="skill-percentage">90%</span>
+            </div>
+            <div class="skill-card" data-category="network">
+                <div class="skill-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h3>MikroTik</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="100"></div>
+                </div>
+                <span class="skill-percentage">100%</span>
+            </div>
+            <div class="skill-card" data-category="network">
+                <div class="skill-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <h3>Cisco</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="100"></div>
+                </div>
+                <span class="skill-percentage">100%</span>
+            </div>
+            <div class="skill-card" data-category="editing">
+                <div class="skill-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3>Capcut</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="95"></div>
+                </div>
+                <span class="skill-percentage">95%</span>
+            </div>
+            <div class="skill-card" data-category="editing">
+                <div class="skill-icon">
+                    <i class="fab fa-figma"></i>
+                </div>
+                <h3>Figma</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="95"></div>
+                </div>
+                <span class="skill-percentage">95%</span>
+            </div>
+            <div class="skill-card" data-category="editing">
+                <div class="skill-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3>Adobe Illustrator</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="88"></div>
+                </div>
+                <span class="skill-percentage">88%</span>
+            </div>
+            <div class="skill-card" data-category="editing">
+                <div class="skill-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3>Adobe Photoshop</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="92"></div>
+                </div>
+                <span class="skill-percentage">92%</span>
+            </div>
+            <div class="skill-card" data-category="editing">
+                <div class="skill-icon">
+                    <i class="fas fa-pen-nib"></i>
+                </div>
+                <h3>Canva</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="95"></div>
+                </div>
+                <span class="skill-percentage">95%</span>
+            </div>
+            <div class="skill-card" data-category="editing">
+                <div class="skill-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h3>Affinity Designer</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="80"></div>
+                </div>
+                <span class="skill-percentage">80%</span>
+            </div>
+            <div class="skill-card" data-category="editing">
+                <div class="skill-icon">
+                    <i class="fas fa-film"></i>
+                </div>
+                <h3>Adobe After Effects</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="87"></div>
+                </div>
+                <span class="skill-percentage">87%</span>
+            </div>
+            <div class="skill-card" data-category="editing">
+                <div class="skill-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3>VN Video Editor</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="92"></div>
+                </div>
+                <span class="skill-percentage">92%</span>
+            </div>
+            <div class="skill-card" data-category="editing">
+                <div class="skill-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3>Alight Motion</h3>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-progress="89"></div>
+                </div>
+                <span class="skill-percentage">89%</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="projects-section">
+    <div class="container">
+        <h2 class="section-title">Project Saya</h2>
+        <div class="projects-filter">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="web">Web App</button>
+            <button class="filter-btn" data-filter="mobile">Mobile</button>
+            <button class="filter-btn" data-filter="design">Design</button>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card" data-category="web">
+                <div class="project-image">
+                    <img src="https://i.pinimg.com/736x/e4/01/9e/e4019e0ac7348fd6c55b0785ab66c6dd.jpg" alt="Project 1">
+                    <div class="project-overlay">
+                        <button class="btn-view"><i class="fas fa-eye"></i></button>
+                        <button class="btn-code"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Website Joki & Topup Game</h3>
+                    <p>Platform Joki rank & topup game berfitur lengkap dengan integrasi pembayaran</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">Css3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card" data-category="mobile">
+                <div class="project-image">
+                    <img src="https://i.pinimg.com/736x/1d/48/28/1d4828da9b6d5c8fb8fd2b1693a34e94.jpg" alt="Project 2">
+                    <div class="project-overlay">
+                        <button class="btn-view"><i class="fas fa-eye"></i></button>
+                        <button class="btn-code"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Aplikasi Pemesanan Tiket Bioskop</h3>
+                    <p>Aplikasi pemesanan tiket bioskop berfitur lengkap dengan integrasi pembayaran</p>
+                    <div class="project-tags">
+                        <span class="tag">Dart</span>
+                        <span class="tag">Swift</span>
+                        <span class="tag">Mockapi</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card" data-category="design">
+                <div class="project-image">
+                    <img src="https://i.pinimg.com/736x/4f/8e/41/4f8e41bbd34538ac29c5f857fb38ac0a.jpg" alt="Project 3">
+                    <div class="project-overlay">
+                        <button class="btn-view"><i class="fas fa-eye"></i></button>
+                        <button class="btn-code"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Desain Antarmuka Pengguna Aplikasi Cinema</h3>
+                    <p>Memberi pengalaman Antarmuka Pengunna dengan fitur lengkap</p>
+                    <div class="project-tags">
+                        <span class="tag">Figma</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card" data-category="design">
+                <div class="project-image">
+                    <img src="https://i.pinimg.com/736x/26/2b/7b/262b7bac7bf794543d83061cb096d50f.jpg" alt="Project 4">
+                    <div class="project-overlay">
+                        <button class="btn-view"><i class="fas fa-eye"></i></button>
+                        <button class="btn-code"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Desain Identitas Merek</h3>
+                    <p>identitas merek lengkap untuk perusahaan Cinema</p>
+                    <div class="project-tags">
+                        <span class="tag">Figma</span>
+                        <span class="tag">Canva</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section id="experience" class="experience-section">
+    <div class="container">
+        <h2 class="section-title">Pengalaman saya</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2020 - 2023</div>
+                    <h3>Teknisi Jaringan</h3>
+                    <h4>Pt Jaya Konsultan Indonesia</h4>
+                    <p>bertanggung jawab untuk merancang, menginstal, mengkonfigurasi, memelihara, dan memperbaiki jaringan komputer.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2024 - 2025</div>
+                    <h3>Mobile App Developer</h3>
+                    <h4>Cinema XXI</h4>
+                    <p>Memimpin tim pengembangan dalam menciptakan aplikasi seluler tingkat perusahaan menggunakan teknologi modern.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials-section">
+    <div class="container">
+        <h2 class="section-title">Saran dari Pelanggan</h2>
+        <div class="testimonials-slider">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p>"Pekerjaan yang luar biasa! Sangat profesional dan hasilnya melebihi ekspektasi. Sangat direkomendasikan!"</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://i.pinimg.com/736x/b6/5f/b5/b65fb514e6bac44a32efebbea537d407.jpg" alt="Client 1">
+                    <div>
+                        <h4>Ricky Martin</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p>"Keterampilan komunikasi dan teknis yang hebat. Proyek selesai tepat waktu dan sesuai anggaran."</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://i.pinimg.com/736x/6d/2a/4a/6d2a4a7a494cfcb73786f115d27a2964.jpg" alt="Client 2">
+                    <div>
+                        <h4>Muhamad Handika</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p>"Pengembang yang luar biasa! Solusi kreatif dan perhatian terhadap detail membuat segalanya berbeda."</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://i.pinimg.com/736x/7f/98/a9/7 f98a9a387288adad58d8e0836cf78aa.jpg" alt="Client 3">
+                    <div>
+                        <h4>Ita</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-controls">
+            <button class="slider-btn prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-btn next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact-section">
+    <div class="container">
+        <h2 class="section-title">Kontak</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Mari Bekerja Sama</h3>
+                <p>Jangan ragu untuk menghubungi kami guna berkolaborasi atau sekadar menyapa dengan ramah!</p>
+                <div class="contact-details">
+                    <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        Hubungi Kami
-                    </button>
-                </div>
-                
+                        <span>alfianawinanto7@email.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+62 882-9138-9753</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Jakarta, Indonesia</span>
+                    </div>
                 </div>
             </div>
+            <form class="contact-form" id="whatsappForm">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="Nama" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="subject" placeholder="Subject" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" placeholder="Saran" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                    Kirim Pesan
+                </button>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <div class="container">
-            <h2 class="section-title">Tentang Saya</h2>
-            <div class="about-content">
-                <div class="about-image">
-                    <div class="image-frame">
-                        <img src="https://i.pinimg.com/736x/c9/74/a6/c974a600bea386f6bf1d467f7c2f3c38.jpg" alt="About">
+<!-- Spotify Music Player -->
+<div class="spotify-player" id="spotifyPlayer">
+    <div class="spotify-container">
+        <button class="spotify-close" id="spotifyClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <iframe 
+            id="spotifyEmbed"
+            src="https://open.spotify.com/embed/playlist/6oB5ckcGqQ4uOys02fjySc" 
+            width="100%" 
+            height="152" 
+            frameborder="0" 
+            allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+        </iframe>
+    </div>
+</div>
 
-                    </div>
-                </div>
-                <div class="about-text">
-                    <h3>Hi, saya Alfian Awinanto</h3>
-                    <p>Saya seorang profesional Mobile App Developer yang bersemangat dalam mengembangkan aplikasi dan website. Saya senang membuat aplikasi dan website dari yang simple menjadi yang kompleks,interaktif, responsif agar terlihat indah. Saya suka suka mendesain sebuah logo dan edit foto atau video. dan saya juga berprofesional sebagai Teknisi Jaringan Komputer.</p>
-                    <div class="about-stats">
-                        <div class="stat-item">
-                            <span class="stat-number" data-target="50">0</span>
-                            <span class="stat-label">Project terselesaikan</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" data-target="30">0</span>
-                            <span class="stat-label">Pelanggan Senang</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" data-target="3">0</span>
-                            <span class="stat-label">Tahun Pengalaman</span>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary">
-                        <i class="fas fa-download"></i>
-                        Download CV
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- Music Toggle Button -->
+<button class="music-toggle" id="musicToggle">
+    <i class="fab fa-spotify"></i>
+</button>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills-section">
-        <div class="container">
-            <h2 class="section-title">Skill saya</h2>
-            <div class="skills-filter">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="frontend">Frontend</button>
-                <button class="filter-btn" data-filter="backend">Backend</button>
-                <button class="filter-btn" data-filter="editing">Editing</button>
-                <button class="filter-btn" data-filter="network">Network</button>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-card" data-category="frontend">
-    <div class="skill-icon">
-        <i class="fas fa-code"></i>
-    </div>
-    <h3>Dart</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="95"></div>
-    </div>
-    <span class="skill-percentage">95%</span>
-</div>
-<div class="skill-card" data-category="frontend">
-    <div class="skill-icon">
-        <i class="fab fa-swift"></i>
-    </div>
-    <h3>Swift</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="90"></div>
-    </div>
-    <span class="skill-percentage">90%</span>
-</div>
-<div class="skill-card" data-category="backend">
-    <div class="skill-icon">
-        <i class="fab fa-php"></i>
-    </div>
-    <h3>PHP</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="90"></div>
-    </div>
-    <span class="skill-percentage">90%</span>
-</div>
-                <div class="skill-card" data-category="frontend">
-                    <div class="skill-icon">
-                        <i class="fab fa-html5"></i>
-                    </div>
-                    <h3>HTML5</h3>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-progress="95"></div>
-                    </div>
-                    <span class="skill-percentage">95%</span>
-                </div>
-                <div class="skill-card" data-category="frontend">
-                    <div class="skill-icon">
-                        <i class="fab fa-css3-alt"></i>
-                    </div>
-                    <h3>CSS3</h3>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-progress="90"></div>
-                    </div>
-                    <span class="skill-percentage">90%</span>
-                </div>
-                <div class="skill-card" data-category="frontend">
-                    <div class="skill-icon">
-                        <i class="fab fa-js"></i>
-                    </div>
-                    <h3>JavaScript</h3>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-progress="88"></div>
-                    </div>
-                    <span class="skill-percentage">88%</span>
-                </div>
-                <div class="skill-card" data-category="frontend">
-                    <div class="skill-icon">
-                        <i class="fab fa-react"></i>
-                    </div>
-                    <h3>React</h3>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-progress="85"></div>
-                    </div>
-                    <span class="skill-percentage">85%</span>
-                </div>
-                <div class="skill-card" data-category="backend">
-                    <div class="skill-icon">
-                        <i class="fab fa-node-js"></i>
-                    </div>
-                    <h3>Node.js</h3>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-progress="82"></div>
-                    </div>
-                    <span class="skill-percentage">82%</span>
-                </div>
-                <div class="skill-card" data-category="backend">
-                    <div class="skill-icon">
-                        <i class="fab fa-python"></i>
-                    </div>
-                    <h3>Python</h3>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-progress="90"></div>
-                    </div>
-                    <span class="skill-percentage">90%</span>
-                </div>
-                <div class="skill-card" data-category="network">
-    <div class="skill-icon">
-        <i class="fas fa-network-wired"></i>
-    </div>
-    <h3>MikroTik</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="100"></div>
-    </div>
-    <span class="skill-percentage">100%</span>
-</div>
-<div class="skill-card" data-category="network">
-    <div class="skill-icon">
-        <i class="fas fa-server"></i>
-    </div>
-    <h3>Cisco</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="100"></div>
-    </div>
-    <span class="skill-percentage">100%</span>
-</div>
-                <div class="skill-card" data-category="editing">
-    <div class="skill-icon">
-        <i class="fas fa-video"></i>
-    </div>
-    <h3>Capcut</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="95"></div>
-    </div>
-    <span class="skill-percentage">95%</span>
-</div>
-<div class="skill-card" data-category="editing">
-    <div class="skill-icon">
-        <i class="fab fa-figma"></i>
-    </div>
-    <h3>Figma</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="95"></div>
-    </div>
-    <span class="skill-percentage">95%</span>
-</div>
-<div class="skill-card" data-category="editing">
-    <div class="skill-icon">
-        <i class="fas fa-palette"></i>
-    </div>
-    <h3>Adobe Illustrator</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="88"></div>
-    </div>
-    <span class="skill-percentage">88%</span>
-</div>
-<div class="skill-card" data-category="editing">
-    <div class="skill-icon">
-        <i class="fas fa-image"></i>
-    </div>
-    <h3>Adobe Photoshop</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="92"></div>
-    </div>
-    <span class="skill-percentage">92%</span>
-</div>
-<div class="skill-card" data-category="editing">
-    <div class="skill-icon">
-        <i class="fas fa-pen-nib"></i>
-    </div>
-    <h3>Canva</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="95"></div>
-    </div>
-    <span class="skill-percentage">95%</span>
-</div>
-<div class="skill-card" data-category="editing">
-    <div class="skill-icon">
-        <i class="fas fa-layer-group"></i>
-    </div>
-    <h3>Affinity Designer</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="80"></div>
-    </div>
-    <span class="skill-percentage">80%</span>
-</div>
-<div class="skill-card" data-category="editing">
-    <div class="skill-icon">
-        <i class="fas fa-film"></i>
-    </div>
-    <h3>Adobe After Effects</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="87"></div>
-    </div>
-    <span class="skill-percentage">87%</span>
-</div>
-<div class="skill-card" data-category="editing">
-    <div class="skill-icon">
-        <i class="fas fa-video"></i>
-    </div>
-    <h3>VN Video Editor</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="92"></div>
-    </div>
-    <span class="skill-percentage">92%</span>
-</div>
-<div class="skill-card" data-category="editing">
-    <div class="skill-icon">
-        <i class="fas fa-magic"></i>
-    </div>
-    <h3>Alight Motion</h3>
-    <div class="skill-bar">
-        <div class="skill-progress" data-progress="89"></div>
-    </div>
-    <span class="skill-percentage">89%</span>
-</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects-section">
-        <div class="container">
-            <h2 class="section-title">Project Saya</h2>
-            <div class="projects-filter">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="web">Web App</button>
-                <button class="filter-btn" data-filter="mobile">Mobile</button>
-                <button class="filter-btn" data-filter="design">Design</button>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card" data-category="web">
-                    <div class="project-image">
-                        <img src="https://i.pinimg.com/736x/e4/01/9e/e4019e0ac7348fd6c55b0785ab66c6dd.jpg" alt="Project 1">
-                        <div class="project-overlay">
-                            <button class="btn-view"><i class="fas fa-eye"></i></button>
-                            <button class="btn-code"><i class="fas fa-code"></i></button>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Website Joki & Topup Game</h3>
-                        <p>Platform Joki rank & topup game berfitur lengkap dengan integrasi pembayaran</p>
-                        <div class="project-tags">
-                            <span class="tag">HTML5</span>
-                            <span class="tag">Css3</span>
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">React</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">MongoDB</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card" data-category="mobile">
-                    <div class="project-image">
-                        <img src="https://i.pinimg.com/736x/1d/48/28/1d4828da9b6d5c8fb8fd2b1693a34e94.jpg" alt="Project 2">
-                        <div class="project-overlay">
-                            <button class="btn-view"><i class="fas fa-eye"></i></button>
-                            <button class="btn-code"><i class="fas fa-code"></i></button>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Aplikasi Pemesanan Tiket Bioskop</h3>
-                        <p>Aplikasi pemesanan tiket bioskop berfitur lengkap dengan integrasi pembayaran</p>
-                        <div class="project-tags">
-                            <span class="tag">Dart</span>
-                            <span class="tag">Swift</span>
-                            <span class="tag">Mockapi</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card" data-category="design">
-                    <div class="project-image">
-                        <img src="https://i.pinimg.com/736x/4f/8e/41/4f8e41bbd34538ac29c5f857fb38ac0a.jpg" alt="Project 3">
-                        <div class="project-overlay">
-                            <button class="btn-view"><i class="fas fa-eye"></i></button>
-                            <button class="btn-code"><i class="fas fa-code"></i></button>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Desain Antarmuka Pengguna Aplikasi Cinema</h3>
-                        <p>Memberi pengalaman Antarmuka Pengunna dengan fitur lengkap</p>
-                        <div class="project-tags">
-                            <span class="tag">Figma</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card" data-category="design">
-                    <div class="project-image">
-                        <img src="https://i.pinimg.com/736x/26/2b/7b/262b7bac7bf794543d83061cb096d50f.jpg" alt="Project 4">
-                        <div class="project-overlay">
-                            <button class="btn-view"><i class="fas fa-eye"></i></button>
-                            <button class="btn-code"><i class="fas fa-code"></i></button>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Desain Identitas Merek</h3>
-                        <p>identitas merek lengkap untuk perusahaan Cinema</p>
-                        <div class="project-tags">
-                            <span class="tag">Figma</span>
-                            <span class="tag">Canva</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="experience-section">
-        <div class="container">
-            <h2 class="section-title">Pengalaman saya</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2020 - 2023</div>
-                        <h3>Teknisi Jaringan</h3>
-                        <h4>Pt Jaya Konsultan Indonesia</h4>
-                        <p>bertanggung jawab untuk merancang, menginstal, mengkonfigurasi, memelihara, dan memperbaiki jaringan komputer.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2024 - 2025</div>
-                        <h3>Mobile App Developer</h3>
-                        <h4>Cinema XXI</h4>
-                        <p>Memimpin tim pengembangan dalam menciptakan aplikasi seluler tingkat perusahaan menggunakan teknologi modern.</p>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials-section">
-        <div class="container">
-            <h2 class="section-title">Saran dari Pelanggan</h2>
-            <div class="testimonials-slider">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <i class="fas fa-quote-left quote-icon"></i>
-                        <p>"Pekerjaan yang luar biasa! Sangat profesional dan hasilnya melebihi ekspektasi. Sangat direkomendasikan!"</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="https://i.pinimg.com/736x/b6/5f/b5/b65fb514e6bac44a32efebbea537d407.jpg" alt="Client 1">
-                        <div>
-                            <h4>Ricky Martin</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <i class="fas fa-quote-left quote-icon"></i>
-                        <p>"Keterampilan komunikasi dan teknis yang hebat. Proyek selesai tepat waktu dan sesuai anggaran."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="https://i.pinimg.com/736x/6d/2a/4a/6d2a4a7a494cfcb73786f115d27a2964.jpg" alt="Client 2">
-                        <div>
-                            <h4>Muhamad Handika</h4>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <i class="fas fa-quote-left quote-icon"></i>
-                        <p>"Pengembang yang luar biasa! Solusi kreatif dan perhatian terhadap detail membuat segalanya berbeda."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="https://i.pinimg.com/736x/7f/98/a9/7f98a9a387288adad58d8e0836cf78aa.jpg" alt="Client 3">
-                        <div>
-                            <h4>Ita</h4>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="slider-controls">
-                <button class="slider-btn prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="slider-btn next"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <h2 class="section-title">Kontak </h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Mari Bekerja Sama</h3>
-                    <p>Jangan ragu untuk menghubungi kami guna berkolaborasi atau sekadar menyapa dengan ramah!</p>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>alfianawinanto7@email.com</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>+62 882-9138-9753</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Jakarta, Indonesia</span>
-                        </div>
-                    </div>
-                </div>
-                <form class="contact-form" id="whatsappForm">
-    <div class="form-group">
-        <input type="text" id="name" placeholder="Nama" required>
-    </div>
-    <div class="form-group">
-        <input type="email" id="email" placeholder="Email" required>
-    </div>
-    <div class="form-group">
-        <input type="text" id="subject" placeholder="Subject" required>
-    </div>
-    <div class="form-group">
-        <textarea id="message" placeholder="Saran" rows="5" required></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">
-        <i class="fas fa-paper-plane"></i>
-        Kirim Pesan
-    </button>
-</form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
+<!-- Footer -->
+<footer class="footer">
     <div class="container">
         <p>&copy; 2025 Alfian Awinanto. All rights reserved.</p>
         <div class="footer-social">
@@ -1837,848 +1952,464 @@
     </div>
 </footer>
 
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+</button>
 
-    <script>
-        // Particle Background
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
+<script>
+    // Particle Background
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
 
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = Math.random() * 3 - 1.5;
+            this.speedY = Math.random() * 3 - 1.5;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+
+        draw() {
+            ctx.fillStyle = '#6366f1';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        const numberOfParticles = (canvas.width * canvas.height) / 15000;
+        for (let i = 0; i < numberOfParticles; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+            
+            for (let j = i; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 100) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(99, 102, 241, ${1 - distance / 100})`;
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
+
+    window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
-        let particles = [];
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 3 - 1.5;
-                this.speedY = Math.random() * 3 - 1.5;
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
-            }
-
-            draw() {
-                ctx.fillStyle = '#6366f1';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            const numberOfParticles = (canvas.width * canvas.height) / 15000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-                
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 100) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(99, 102, 241, ${1 - distance / 100})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            
-            requestAnimationFrame(animateParticles);
-        }
-
         initParticles();
-        animateParticles();
+    });
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles();
+    // Navigation
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navbar = document.getElementById('navbar');
+
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
         });
+    });
 
-        // Navigation
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const navbar = document.getElementById('navbar');
-
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-            });
-        });
-
-        // Sticky Navigation
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Theme Toggle
-        const themeToggle = document.querySelector('.theme-toggle');
-        const themeIcon = document.getElementById('themeIcon');
-
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
-            
-            if (document.body.classList.contains('light-theme')) {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
-        });
-
-        // Typing Effect
-        const typingText = document.querySelector('.typing-text');
-        const texts = [
-            'I Mobile Apps Developer',
-            'I Create Digital Experiences',
-            'I Design User Interfaces',
-            'I FrontEnd Developer',
-            'I Editing Video and photos'
-        ];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-
-        function typeEffect() {
-            const currentText = texts[textIndex];
-            
-            if (isDeleting) {
-                typingText.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typingText.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-            }
-            
-            if (!isDeleting && charIndex === currentText.length) {
-                setTimeout(() => isDeleting = true, 2000);
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-            }
-            
-            const speed = isDeleting ? 50 : 100;
-            setTimeout(typeEffect, speed);
+    // Sticky Navigation
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
+    });
 
-        typeEffect();
+    // Theme Toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = document.getElementById('themeIcon');
 
-        // Smooth Scroll
-        function scrollToSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            section.scrollIntoView({ behavior: 'smooth' });
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        
+        if (document.body.classList.contains('light-theme')) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
         }
+    });
 
-        // Counter Animation
-        const statNumbers = document.querySelectorAll('.stat-number');
+    // Typing Effect
+    const typingText = document.querySelector('.typing-text');
+    const texts = [
+        'I Mobile Apps Developer',
+        'I Create Digital Experiences',
+        'I Design User Interfaces',
+        'I FrontEnd Developer',
+        'I Editing Video and photos'
+    ];
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
 
-        const observerOptions = {
-            threshold: 0.5
-        };
+    function typeEffect() {
+        const currentText = texts[textIndex];
+        
+        if (isDeleting) {
+            typingText.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typingText.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+        }
+        
+        if (!isDeleting && charIndex === currentText.length) {
+            setTimeout(() => isDeleting = true, 2000);
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+        }
+        
+        const speed = isDeleting ? 50 : 100;
+        setTimeout(typeEffect, speed);
+    }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const target = parseInt(entry.target.dataset.target);
-                    animateCounter(entry.target, target);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+    typeEffect();
 
-        statNumbers.forEach(stat => observer.observe(stat));
+    // Smooth Scroll
+    function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
 
-        function animateCounter(element, target) {
-            let current = 0;
-            const increment = target / 100;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target + '+';
-                    clearInterval(timer);
+    // Counter Animation
+    const statNumbers = document.querySelectorAll('.stat-number');
+
+    const observerOptions = {
+        threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.dataset.target);
+                animateCounter(entry.target, target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    statNumbers.forEach(stat => observer.observe(stat));
+
+    function animateCounter(element, target) {
+        let current = 0;
+        const increment = target / 100;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                element.textContent = target + '+';
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(current);
+            }
+        }, 20);
+    }
+
+    // Skills Filter
+    const skillsFilterBtns = document.querySelectorAll('.skills-filter .filter-btn');
+    const skillCards = document.querySelectorAll('.skill-card');
+
+    skillsFilterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            skillsFilterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.dataset.filter;
+            
+            skillCards.forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.classList.remove('hidden');
+                    setTimeout(() => {
+                        const progress = card.querySelector('.skill-progress');
+                        const percentage = progress.dataset.progress;
+                        progress.style.width = percentage + '%';
+                    }, 100);
                 } else {
-                    element.textContent = Math.floor(current);
+                    card.classList.add('hidden');
                 }
-            }, 20);
-        }
-
-        // Skills Filter
-        const skillsFilterBtns = document.querySelectorAll('.skills-filter .filter-btn');
-        const skillCards = document.querySelectorAll('.skill-card');
-
-        skillsFilterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                skillsFilterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const filter = btn.dataset.filter;
-                
-                skillCards.forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.classList.remove('hidden');
-                        setTimeout(() => {
-                            const progress = card.querySelector('.skill-progress');
-                            const percentage = progress.dataset.progress;
-                            progress.style.width = percentage + '%';
-                        }, 100);
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
             });
         });
+    });
 
-        // Initialize Skill Bars
-        const skillObserver = new IntersectionObserver((entries) => {
+    // Initialize Skill Bars
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const progress = entry.target.querySelector('.skill-progress');
+                const percentage = progress.dataset.progress;
+                progress.style.width = percentage + '%';
+                skillObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    skillCards.forEach(card => skillObserver.observe(card));
+
+    // Projects Filter
+    const projectsFilterBtns = document.querySelectorAll('.projects-filter .filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    projectsFilterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            projectsFilterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.dataset.filter;
+            
+            projectCards.forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    // Testimonials Slider
+    const slider = document.querySelector('.testimonials-slider');
+    const prevBtn = document.querySelector('.slider-btn.prev');
+    const nextBtn = document.querySelector('.slider-btn.next');
+
+    nextBtn.addEventListener('click', () => {
+        slider.scrollBy({ left: 370, behavior: 'smooth' });
+    });
+
+    prevBtn.addEventListener('click', () => {
+        slider.scrollBy({ left: -370, behavior: 'smooth' });
+    });
+
+    // Contact Form - WhatsApp Integration
+    const contactForm = document.getElementById('whatsappForm');
+
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+        
+        const whatsappMessage = `Halo, saya ${name}%0A%0AEmail: ${email}%0ASubject: ${subject}%0A%0APesan:%0A${message}`;
+        
+        const whatsappUrl = `https://wa.me/6288291389753?text=${whatsappMessage}`;
+        
+        window.open(whatsappUrl, '_blank');
+        
+        contactForm.reset();
+    });
+
+    // Spotify Music Player Control
+    const spotifyPlayer = document.getElementById('spotifyPlayer');
+    const musicToggle = document.getElementById('musicToggle');
+    const spotifyClose = document.getElementById('spotifyClose');
+    const spotifyEmbed = document.getElementById('spotifyEmbed');
+    let isPlayerVisible = false;
+
+    // Toggle Spotify Player
+    musicToggle.addEventListener('click', () => {
+        isPlayerVisible = !isPlayerVisible;
+        
+        if (isPlayerVisible) {
+            spotifyPlayer.classList.add('show');
+            musicToggle.classList.add('active');
+            
+            setTimeout(() => {
+                spotifyEmbed.src = spotifyEmbed.src;
+            }, 500);
+        } else {
+            spotifyPlayer.classList.remove('show');
+            musicToggle.classList.remove('active');
+        }
+    });
+
+    // Close Spotify Player
+    spotifyClose.addEventListener('click', () => {
+        spotifyPlayer.classList.remove('show');
+        musicToggle.classList.remove('active');
+        isPlayerVisible = false;
+    });
+
+    // Close player ketika klik di luar
+    document.addEventListener('click', (e) => {
+        if (isPlayerVisible && 
+            !spotifyPlayer.contains(e.target) && 
+            !musicToggle.contains(e.target)) {
+            spotifyPlayer.classList.remove('show');
+            musicToggle.classList.remove('active');
+            isPlayerVisible = false;
+        }
+    });
+
+    // Animasi tombol musik saat scroll
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            if (window.scrollY > lastScrollY) {
+                musicToggle.style.transform = 'translateY(100px)';
+            } else {
+                musicToggle.style.transform = 'translateY(0)';
+            }
+        }
+        lastScrollY = window.scrollY;
+    });
+
+    // Welcome message dengan musik
+    setTimeout(() => {
+        if (!isPlayerVisible) {
+            const musicNotification = document.createElement('div');
+            musicNotification.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                right: 100px;
+                background: var(--surface-color);
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                border-left: 4px solid #1DB954;
+                z-index: 1000;
+                animation: slideInRight 0.5s ease;
+                max-width: 250px;
+            `;
+            
+            musicNotification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <i class="fab fa-spotify" style="font-size: 1.5rem; color: #1DB954;"></i>
+                    <div>
+                        <strong style="display: block; margin-bottom: 0.3rem;">Musik tersedia!</strong>
+                        <small style="color: var(--text-secondary);">Klik tombol hijau untuk memutar</small>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(musicNotification);
+            
+            setTimeout(() => {
+                musicNotification.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => musicNotification.remove(), 500);
+            }, 4000);
+        }
+    }, 3000);
+
+    // Back to Top Button
+    const backToTopBtn = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Active Link on Scroll
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').slice(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Animation on Scroll
+    const animateOnScroll = () => {
+        const elements = document.querySelectorAll('.skill-card, .project-card, .timeline-item, .testimonial-card');
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const animationObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const progress = entry.target.querySelector('.skill-progress');
-                    const percentage = progress.dataset.progress;
-                    progress.style.width = percentage + '%';
-                    skillObserver.unobserve(entry.target);
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
         }, observerOptions);
-
-        skillCards.forEach(card => skillObserver.observe(card));
-
-        // Projects Filter
-        const projectsFilterBtns = document.querySelectorAll('.projects-filter .filter-btn');
-        const projectCards = document.querySelectorAll('.project-card');
-
-        projectsFilterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                projectsFilterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const filter = btn.dataset.filter;
-                
-                projectCards.forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
-            });
+        
+        elements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'all 0.6s ease';
+            animationObserver.observe(el);
         });
+    };
 
-        // Testimonials Slider
-        const slider = document.querySelector('.testimonials-slider');
-        const prevBtn = document.querySelector('.slider-btn.prev');
-        const nextBtn = document.querySelector('.slider-btn.next');
+    animateOnScroll();
 
-        let scrollAmount = 0;
-
-        nextBtn.addEventListener('click', () => {
-            slider.scrollBy({ left: 370, behavior: 'smooth' });
-        });
-
-        prevBtn.addEventListener('click', () => {
-            slider.scrollBy({ left: -370, behavior: 'smooth' });
-        });
-
-        // Contact Form
-        // Contact Form - WhatsApp Integration
-const contactForm = document.getElementById('whatsappForm');
-
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
-    
-    const whatsappMessage = `Halo, saya ${name}%0A%0AEmail: ${email}%0ASubject: ${subject}%0A%0APesan:%0A${message}`;
-    
-    const whatsappUrl = `https://wa.me/6288291389753?text=${whatsappMessage}`;
-    
-    window.open(whatsappUrl, '_blank');
-    
-    contactForm.reset();
-});
-
-        // Back to Top Button
-        const backToTopBtn = document.getElementById('backToTop');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Profile Image Upload
-        const profileImage = document.getElementById('profileImage');
-
-        profileImage.addEventListener('click', () => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            
-            input.onchange = (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        profileImage.src = event.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            };
-            
-            input.click();
-        });
-
-        // Lanyard Interactive Movement
-        const lanyardCard = document.querySelector('.lanyard-card');
-
-        document.addEventListener('mousemove', (e) => {
-            const { clientX, clientY } = e;
-            const { innerWidth, innerHeight } = window;
-            
-            const xRotation = ((clientY / innerHeight) - 0.5) * 10;
-            const yRotation = ((clientX / innerWidth) - 0.5) * -10;
-            
-            lanyardCard.style.transform = `rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
-        });
-
-        // Active Link on Scroll
-        const sections = document.querySelectorAll('section');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (window.scrollY >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').slice(1) === current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        console.log('%c🚀 Portfolio Website Loaded Successfully!', 'color: #6366f1; font-size: 20px; font-weight: bold;');
-        console.log('%c💼 Developed with ❤️ by John Doe', 'color: #8b5cf6; font-size: 14px;');
-
-        // Animation on Scroll
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.skill-card, .project-card, .timeline-item, .testimonial-card');
-            
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            };
-            
-            const animationObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-            
-            elements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(50px)';
-                el.style.transition = 'all 0.6s ease';
-                animationObserver.observe(el);
-            });
-        };
-
-        animateOnScroll();
-
-        // Parallax Effect for Hero Section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.lanyard-container, .hero-text');
-            
-            parallaxElements.forEach((el, index) => {
-                const speed = index === 0 ? 0.5 : 0.3;
-                el.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-
-        // Cursor Trail Effect
-        let cursorTrail = [];
-        const maxTrailLength = 20;
-
-        document.addEventListener('mousemove', (e) => {
-            cursorTrail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
-            
-            if (cursorTrail.length > maxTrailLength) {
-                cursorTrail.shift();
-            }
-            
-            drawCursorTrail();
-        });
-
-        function drawCursorTrail() {
-            const existingTrails = document.querySelectorAll('.cursor-trail');
-            existingTrails.forEach(trail => trail.remove());
-            
-            cursorTrail.forEach((point, index) => {
-                const trail = document.createElement('div');
-                trail.className = 'cursor-trail';
-                trail.style.cssText = `
-                    position: fixed;
-                    width: 5px;
-                    height: 5px;
-                    background: radial-gradient(circle, rgba(99, 102, 241, ${1 - index / maxTrailLength}), transparent);
-                    border-radius: 50%;
-                    pointer-events: none;
-                    z-index: 9999;
-                    left: ${point.x}px;
-                    top: ${point.y}px;
-                    transform: translate(-50%, -50%);
-                `;
-                document.body.appendChild(trail);
-                
-                setTimeout(() => trail.remove(), 500);
-            });
-        }
-
-        // Project View and Code Buttons
-        document.querySelectorAll('.btn-view').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                alert('Opening project preview...');
-            });
-        });
-
-        document.querySelectorAll('.btn-code').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                alert('Opening source code...');
-            });
-        });
-
-        // Add Ripple Effect to Buttons
-        document.querySelectorAll('.btn, .filter-btn, .slider-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.cssText = `
-                    position: absolute;
-                    width: ${size}px;
-                    height: ${size}px;
-                    border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.5);
-                    left: ${x}px;
-                    top: ${y}px;
-                    transform: scale(0);
-                    animation: ripple 0.6s ease-out;
-                    pointer-events: none;
-                `;
-                
-                this.style.position = 'relative';
-                this.style.overflow = 'hidden';
-                this.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
-
-        // Loading Animation
-        window.addEventListener('load', () => {
-            const loader = document.createElement('div');
-            loader.className = 'page-loader';
-            loader.innerHTML = `
-                <div class="loader-content">
-                    <div class="loader-spinner"></div>
-                    <p>Loading Portfolio...</p>
-                </div>
-            `;
-            
-            const loaderStyles = document.createElement('style');
-            loaderStyles.textContent = `
-                .page-loader {
-                    position: fixed;
-                    inset: 0;
-                    background: var(--bg-color);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    z-index: 10000;
-                    opacity: 1;
-                    transition: opacity 0.5s ease;
-                }
-                
-                .page-loader.fade-out {
-                    opacity: 0;
-                    pointer-events: none;
-                }
-                
-                .loader-content {
-                    text-align: center;
-                }
-                
-                .loader-spinner {
-                    width: 50px;
-                    height: 50px;
-                    border: 4px solid rgba(99, 102, 241, 0.3);
-                    border-top-color: #6366f1;
-                    border-radius: 50%;
-                    animation: spin 1s linear infinite;
-                    margin: 0 auto 1rem;
-                }
-                
-                @keyframes spin {
-                    to { transform: rotate(360deg); }
-                }
-            `;
-            
-            document.head.appendChild(loaderStyles);
-            document.body.prepend(loader);
-            
-            setTimeout(() => {
-                loader.classList.add('fade-out');
-                setTimeout(() => loader.remove(), 500);
-            }, 1000);
-        });
-
-        // Easter Egg - Konami Code
-        let konamiCode = [];
-        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-
-        document.addEventListener('keydown', (e) => {
-            konamiCode.push(e.key);
-            
-            if (konamiCode.length > konamiSequence.length) {
-                konamiCode.shift();
-            }
-            
-            if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
-                triggerEasterEgg();
-                konamiCode = [];
-            }
-        });
-
-        function triggerEasterEgg() {
-            const message = document.createElement('div');
-            message.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
-                color: white;
-                padding: 3rem;
-                border-radius: 20px;
-                font-size: 2rem;
-                font-weight: bold;
-                z-index: 10001;
-                text-align: center;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-                animation: popIn 0.5s ease;
-            `;
-            message.innerHTML = `
-                🎉 Congratulations! 🎉<br>
-                <span style="font-size: 1.2rem;">You found the secret!</span>
-            `;
-            
-            document.body.appendChild(message);
-            
-            // Confetti Effect
-            for (let i = 0; i < 100; i++) {
-                createConfetti();
-            }
-            
-            setTimeout(() => {
-                message.style.animation = 'popOut 0.5s ease';
-                setTimeout(() => message.remove(), 500);
-            }, 3000);
-        }
-
-        function createConfetti() {
-            const confetti = document.createElement('div');
-            const colors = ['#6366f1', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            
-            confetti.style.cssText = `
-                position: fixed;
-                width: 10px;
-                height: 10px;
-                background: ${color};
-                top: -10px;
-                left: ${Math.random() * 100}%;
-                opacity: 1;
-                transform: rotate(${Math.random() * 360}deg);
-                animation: confettiFall ${2 + Math.random() * 3}s linear;
-                pointer-events: none;
-                z-index: 10000;
-            `;
-            
-            document.body.appendChild(confetti);
-            
-            setTimeout(() => confetti.remove(), 5000);
-        }
-
-        // Lazy Loading Images
-        const images = document.querySelectorAll('img');
-
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.style.opacity = '0';
-                    img.style.transition = 'opacity 0.5s ease';
-                    
-                    img.onload = () => {
-                        img.style.opacity = '1';
-                    };
-                    
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-
-        images.forEach(img => imageObserver.observe(img));
-
-        // Social Media Share Function
-        function shareOnSocialMedia(platform) {
-            const url = window.location.href;
-            const title = 'Check out this amazing portfolio!';
-            
-            const shareUrls = {
-                twitter: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
-                facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-                linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
-                whatsapp: `https://wa.me/?text=${title} ${url}`
-            };
-            
-            if (shareUrls[platform]) {
-                window.open(shareUrls[platform], '_blank', 'width=600,height=400');
-            }
-        }
-
-        // Right Click Context Menu Customization
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            
-            const contextMenu = document.createElement('div');
-            contextMenu.style.cssText = `
-                position: fixed;
-                background: var(--surface-color);
-                border: 2px solid var(--primary-color);
-                border-radius: 10px;
-                padding: 1rem;
-                left: ${e.clientX}px;
-                top: ${e.clientY}px;
-                z-index: 10000;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                min-width: 200px;
-            `;
-            
-            contextMenu.innerHTML = `
-                <div style="margin-bottom: 0.5rem; font-weight: bold; color: var(--primary-color);">
-                    <i class="fas fa-code"></i> Portfolio Menu
-                </div>
-                <div style="padding: 0.5rem; cursor: pointer; border-radius: 5px; transition: background 0.3s;" onmouseover="this.style.background='var(--primary-color)'; this.style.color='white'" onmouseout="this.style.background='transparent'; this.style.color='var(--text-color)'" onclick="window.location.reload()">
-                    <i class="fas fa-sync"></i> Reload Page
-                </div>
-                <div style="padding: 0.5rem; cursor: pointer; border-radius: 5px; transition: background 0.3s;" onmouseover="this.style.background='var(--primary-color)'; this.style.color='white'" onmouseout="this.style.background='transparent'; this.style.color='var(--text-color)'" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); document.body.removeChild(this.parentElement)">
-                    <i class="fas fa-arrow-up"></i> Back to Top
-                </div>
-                <div style="padding: 0.5rem; cursor: pointer; border-radius: 5px; transition: background 0.3s;" onmouseover="this.style.background='var(--primary-color)'; this.style.color='white'" onmouseout="this.style.background='transparent'; this.style.color='var(--text-color)'" onclick="document.querySelector('.theme-toggle').click(); document.body.removeChild(this.parentElement)">
-                    <i class="fas fa-palette"></i> Toggle Theme
-                </div>
-            `;
-            
-            document.body.appendChild(contextMenu);
-            
-            const closeMenu = (e) => {
-                if (!contextMenu.contains(e.target)) {
-                    contextMenu.remove();
-                    document.removeEventListener('click', closeMenu);
-                }
-            };
-            
-            setTimeout(() => {
-                document.addEventListener('click', closeMenu);
-            }, 100);
-        });
-
-        // Keyboard Shortcuts
-        document.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + K to focus search (if you add search functionality)
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                alert('Search functionality - Coming soon!');
-            }
-            
-            // Ctrl/Cmd + / to show keyboard shortcuts
-            if ((e.ctrlKey || e.metaKey) && e.key === '/') {
-                e.preventDefault();
-                showKeyboardShortcuts();
-            }
-            
-            // Press 'T' to toggle theme
-            if (e.key === 't' || e.key === 'T') {
-                if (!e.target.matches('input, textarea')) {
-                    document.querySelector('.theme-toggle').click();
-                }
-            }
-        });
-
-        function showKeyboardShortcuts() {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                inset: 0;
-                background: rgba(0, 0, 0, 0.8);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10000;
-                animation: fadeIn 0.3s ease;
-            `;
-            
-            modal.innerHTML = `
-                <div style="background: var(--surface-color); padding: 2rem; border-radius: 20px; max-width: 500px; width: 90%;">
-                    <h2 style="margin-bottom: 1.5rem; color: var(--primary-color);">
-                        <i class="fas fa-keyboard"></i> Keyboard Shortcuts
-                    </h2>
-                    <div style="display: grid; gap: 1rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span>Toggle Theme</span>
-                            <kbd style="background: var(--bg-color); padding: 0.5rem; border-radius: 5px;">T</kbd>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span>Show Shortcuts</span>
-                            <kbd style="background: var(--bg-color); padding: 0.5rem; border-radius: 5px;">Ctrl + /</kbd>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span>Back to Top</span>
-                            <kbd style="background: var(--bg-color); padding: 0.5rem; border-radius: 5px;">Home</kbd>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span>Konami Code</span>
-                            <kbd style="background: var(--bg-color); padding: 0.5rem; border-radius: 5px;">↑ ↑ ↓ ↓ ← → ← → B A</kbd>
-                        </div>
-                    </div>
-                    <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 1.5rem; width: 100%; padding: 1rem; background: var(--gradient); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold;">
-                        Got it!
-                    </button>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        }
-
-        // Performance Monitoring
-        let lastScrollTime = Date.now();
-        let fps = 0;
-
-        function measureFPS() {
-            const now = Date.now();
-            fps = Math.round(1000 / (now - lastScrollTime));
-            lastScrollTime = now;
-        }
-
-        window.addEventListener('scroll', measureFPS);
-
-        // Developer Tools Detection
-        const devtools = { isOpen: false };
-        const threshold = 160;
-
-        setInterval(() => {
-            if (window.outerWidth - window.innerWidth > threshold || 
-                window.outerHeight - window.innerHeight > threshold) {
-                if (!devtools.isOpen) {
-                    devtools.isOpen = true;
-                    console.log('%c👨‍💻 Hello Developer!', 'color: #6366f1; font-size: 24px; font-weight: bold;');
-                    console.log('%cInterested in the code? Feel free to explore!', 'color: #8b5cf6; font-size: 16px;');
-                    console.log('%cWant to collaborate? Let\'s connect!', 'color: #ec4899; font-size: 16px;');
-                }
-            } else {
-                devtools.isOpen = false;
-            }
-        }, 1000);
-
-        // Initialize all features
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('✅ All portfolio features initialized successfully!');
-            console.log('📊 Performance: Optimal');
-            console.log('🎨 Theme: ' + (document.body.classList.contains('light-theme') ? 'Light' : 'Dark'));
-            console.log('🚀 Ready for interaction!');
-        });
-
-        // Auto-save scroll position
-        window.addEventListener('beforeunload', () => {
-            sessionStorage.setItem('scrollPosition', window.scrollY);
-        });
-
-        window.addEventListener('load', () => {
-            const scrollPosition = sessionStorage.getItem('scrollPosition');
-            if (scrollPosition) {
-                window.scrollTo(0, parseInt(scrollPosition));
-                sessionStorage.removeItem('scrollPosition');
-            }
-        });
-    </script>
+    console.log('%c🚀 Portfolio Website Loaded Successfully!', 'color: #6366f1; font-size: 20px; font-weight: bold;');
+    console.log('%c💼 Developed with ❤️ by Alfian Awinanto', 'color: #8b5cf6; font-size: 14px;');
+</script>
 </body>
 </html>
